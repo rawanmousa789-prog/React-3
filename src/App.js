@@ -5,6 +5,8 @@ import Tips from './pages/Tips';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {useContext } from "react";
 import Data from "./context/Data";
+import SginIn from './pages/SginIn';
+import SginUp from './pages/SginUp';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +25,14 @@ const router = createBrowserRouter([
   {
     path: "/Tips",
     element: <Tips />,
+  },
+  {
+    path: "/SginIn",
+    element: <SginIn />,
+  },
+  {
+    path: "/SginUp",
+    element: <SginUp />,
   },
 ]);
 
