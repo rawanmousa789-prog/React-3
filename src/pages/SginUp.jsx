@@ -35,7 +35,7 @@ export default function SginUp() {
               e.preventDefault();
               createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-                  // Signed up
+                  
                   const user = userCredential.user;
                     console.log("success!!")
                 })
