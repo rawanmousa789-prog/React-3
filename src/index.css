@@ -111,3 +111,30 @@ form button:active{
 form p{
   color: #1f2937;
 }
+
+/* auth message */
+.auth {
+  min-height: calc(100vh - 160px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dark .auth p {
+  font-size: 26px;
+  color: #ffffff;
+  font-weight: 500;
+}
+.light .auth p {
+  font-size: 26px;
+  color: #000000;
+  font-weight: 500;
+}
+.auth a {
+  color: #19a8e3;
+  font-weight: 600;
+}
+
+.auth a:hover {
+  opacity: 0.85;
+}
