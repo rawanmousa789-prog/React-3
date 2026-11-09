@@ -5,9 +5,10 @@ import { Link } from "react-router";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import {auth} from "../firebase/Config"
 import { useState } from "react";
-
+import { useNavigate } from "react-router";
 
 export default function SginIn() {
+  let navigate = useNavigate();
   const[email , setEmail] = useState("")
   const[password , setPassword] = useState("")
   return (
@@ -34,6 +35,7 @@ export default function SginIn() {
                   // Signed in
                   const user = userCredential.user;
                   console.log("your login")
+                  navigate("/")
                 })
                 .catch((error) => {
                   const errorCode = error.code;

@@ -8,9 +8,10 @@ import Data from "../context/Data";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from "../firebase/Config";
 import { signOut } from "firebase/auth";
-
+import { useNavigate } from "react-router";
 
 export default function Header() {
+  let navigate = useNavigate();
   const [user, loading, error] = useAuthState(auth);
   const {theme,changeTheme} = useContext(Data);
   return (
@@ -55,6 +56,7 @@ export default function Header() {
       {user && <li onClick={() => {
         signOut(auth).then(() => {
   console.log("success sgin out")
+  navigate("/SginIn")
 }).catch((error) => {
 console.log("fuild sgin out")
 });

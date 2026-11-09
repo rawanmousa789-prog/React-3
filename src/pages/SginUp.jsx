@@ -5,9 +5,10 @@ import { Link } from "react-router";
 import {auth} from "../firebase/Config"
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
-
+import { useNavigate } from "react-router";
 
 export default function SginUp() {
+  let navigate = useNavigate();
   const [email , setEmail] = useState("")
   const [password , setPassword] = useState("")
 
@@ -38,6 +39,7 @@ export default function SginUp() {
                   
                   const user = userCredential.user;
                     console.log("success!!")
+                    navigate("/")
                 })
                 .catch((error) => {
                   const errorCode = error.code;
