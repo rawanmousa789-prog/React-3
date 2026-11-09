@@ -11,6 +11,8 @@ export default function SginUp() {
   let navigate = useNavigate();
   const [email , setEmail] = useState("")
   const [password , setPassword] = useState("")
+  const[error , setError] = useState(false)
+    const [messageError, setMessageError] = useState("")
 
   return (
     <div>
@@ -44,6 +46,20 @@ export default function SginUp() {
                 .catch((error) => {
                   const errorCode = error.code;
                   const errorMessage = error.message;
+                  setError(true)
+                  switch (errorCode) {
+                    case "auth/email-already-in-use":
+                      setMessageError("Email already in use.");
+                      break;
+                    case "auth/invalid-email":
+                      setMessageError("Invalid email address.");
+                      break;
+                    case "auth/weak-password":
+                      setMessageError("Password should be at least 6 characters.");
+                      break;
+                    default:
+                      setMessageError("An error occurred. Please try again.");
+                  }
                   console.log("error!!!")
                   console.log(errorCode);
                   console.log(errorMessage);
@@ -55,6 +71,7 @@ export default function SginUp() {
           <p className="account">
             Already have an account?<Link to="/SginIn"> Sign In</Link>
           </p>
+          {error && <p>{messageError}</p>}
         </form>
       </main>
       <Footer />

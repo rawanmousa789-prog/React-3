@@ -11,6 +11,8 @@ export default function SginIn() {
   let navigate = useNavigate();
   const[email , setEmail] = useState("")
   const[password , setPassword] = useState("")
+  const[error , setError] = useState(false)
+  const [messageError, setMessageError] = useState("")
   return (
     <div>
       <Helmet>
@@ -40,6 +42,25 @@ export default function SginIn() {
                 .catch((error) => {
                   const errorCode = error.code;
                   const errorMessage = error.message;
+                  setError(true)
+                  // setMessageError(errorMessage)
+                  switch (errorCode) {
+                    case "auth/invalid-email":
+                      setMessageError("Invalid email address.");
+                      break;
+                    
+                    case "auth/user-not-found":
+                      setMessageError("User not found."); 
+                      break;
+                    case "auth/wrong-password":
+                      setMessageError("Incorrect password.");
+                      break;
+                    case "auth/too-many-requests":
+                      setMessageError("Too many failed login attempts. Please try again later.");
+                      break;
+                    default:
+                      setMessageError("An error occurred. Please try again.");
+                  }
                   console.log("faild login")
                 });
             }}
@@ -49,6 +70,7 @@ export default function SginIn() {
           <p className="account">
             Don't have an account? <Link to="/SginUp">Sign Up</Link>
           </p>
+          {error && <p>{messageError}</p>}
         </form>
       </main>
       <Footer />
