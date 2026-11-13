@@ -138,3 +138,29 @@ form p{
 .auth a:hover {
   opacity: 0.85;
 }
+/* basic page */
+.basic-page {
+  justify-content: center;
+
+}
+.deleteBtn {
+  padding: 10px;
+  border: none;
+  background-color: #ff4d4f;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.3s ease;
+}
+.deleteBtn:hover {
+  background-color: #ff7875;
+}
+.light .basic-page h3,.light .basic-page p {
+  color: #000000;
+  padding: 5px;
+}
+.dark .basic-page h3,.dark .basic-page p {
+  color: #ffffff;
+  padding: 5px;
+}
