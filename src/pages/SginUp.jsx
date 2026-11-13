@@ -2,17 +2,18 @@ import Footer from "../component/Footer";
 import Header from "../component/Header";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router";
-import {auth} from "../firebase/Config"
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase/Config";
+import { createUserWithEmailAndPassword,updateProfile } from "firebase/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
 export default function SginUp() {
   let navigate = useNavigate();
-  const [email , setEmail] = useState("")
-  const [password , setPassword] = useState("")
-  const[error , setError] = useState(false)
-    const [messageError, setMessageError] = useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [userName, setUserName] = useState("");
+  const [error, setError] = useState(false);
+  const [messageError, setMessageError] = useState("");
 
   return (
     <div>
@@ -23,30 +24,55 @@ export default function SginUp() {
       <main>
         <form>
           <p>Create a new account</p>
-          {/* <input required type="text" placeholder="First Name" />
-          <input required type="text" placeholder="Last Name" /> */}
-          <input onChange={(e) => {
-            setEmail(e.target.value)
-          }
-          } required type="email" placeholder="Your Email" />
-          <input onChange={(e) => {
-            setPassword(e.target.value)
-          }
-          }  required type="password" placeholder="Password" />
+          <input
+            onChange={(e) => {
+              setUserName(e.target.value);
+            }}
+            required
+            type="text"
+            placeholder="user name"
+          />
+          <input
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+            required
+            type="email"
+            placeholder="Your Email"
+          />
+          <input
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            required
+            type="password"
+            placeholder="Password"
+          />
           <button
             onClick={(e) => {
               e.preventDefault();
               createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-                  
                   const user = userCredential.user;
-                    console.log("success!!")
-                    navigate("/")
+                  console.log("success!!");
+                  navigate("/");
+                  updateProfile(auth.currentUser, {
+                    displayName: userName,
+                    photoURL: "https://example.com/jane-q-user/profile.jpg",
+                  })
+                    .then(() => {
+                      // Profile updated!
+                      console.log("success update profile");
+                    })
+                    .catch((error) => {
+                      // An error occurred
+                      console.log("error update profile");
+                    });
                 })
                 .catch((error) => {
                   const errorCode = error.code;
                   const errorMessage = error.message;
-                  setError(true)
+                  setError(true);
                   switch (errorCode) {
                     case "auth/email-already-in-use":
                       setMessageError("Email already in use.");
@@ -55,12 +81,14 @@ export default function SginUp() {
                       setMessageError("Invalid email address.");
                       break;
                     case "auth/weak-password":
-                      setMessageError("Password should be at least 6 characters.");
+                      setMessageError(
+                        "Password should be at least 6 characters.",
+                      );
                       break;
                     default:
                       setMessageError("An error occurred. Please try again.");
                   }
-                  console.log("error!!!")
+                  console.log("error!!!");
                   console.log(errorCode);
                   console.log(errorMessage);
                 });

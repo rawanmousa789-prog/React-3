@@ -23,7 +23,8 @@ export default function Basic() {
       </Helmet>
       <Header />
 
-      <Content data="Basic" />
+      {/* <Content data="Basic" /> */}
+      <main>Wellcome {user.displayName}</main>
 
       <Footer />
     </div>

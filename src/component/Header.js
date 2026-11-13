@@ -62,9 +62,9 @@ console.log("fuild sgin out")
 });
       }
       } className="main-list">
-        <NavLink className="main-link" to="/SginIn">
-          Sgin Out
-        </NavLink>
+        <button className="main-link signOut" to="/SginIn">
+          SginOut
+        </button>
       </li>}
     </ul>
   </header>
