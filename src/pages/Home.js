@@ -8,17 +8,58 @@ import { Link  } from "react-router";
 
 export default function Home() {
   const [user, loading, error] = useAuthState(auth);
-  return (
-    <div>
-      <Helmet>
+  // loading
+    if (loading) {
+      return (
+        <div>
+          <Header />
+          <p>Initialising User...</p>
+          <Footer />
+        </div>
+      );
+    }
+    //not signin
+    if(!user){
+      return(
+        <div>
+          <Header/>
+          <div>
+            <main className="auth"> <Link to="/SginIn">Sign in </Link>  to continue...</main>
+          </div>
+          <Footer/>
+        </div>
+      )
+    }
+// signin without email verification
+// signin with email verification
+    if(user){
+      if(!user.emailVerified){
+        return(
+              <div>
+                <Header/>
+                <main>
+                  <div>
+                    <p>we sent an email to verifiy your account</p>
+                    <button className="deleteBtn">send again</button>
+                  </div>
+                </main>
+                <Footer/>
+              </div>
+        
+            )
+      }
+      if(user.emailVerified){
+        return(
+          <>
+          <Helmet>
         <title> Home page</title>
         <meta
       name="description"
       content="Home"
     />
       </Helmet>
-      <Header/>
-  {user && <main className="hero-section">
+          <Header/>
+          <main className="hero-section">
     <div className="hero-text">
       <h2>Start your journey with Web Development</h2>
       <p>Learn step-by-step and build real projects.</p>
@@ -31,9 +72,21 @@ export default function Home() {
       alt=""
       className="hero-img"
     />
-  </main>}
-  {!user && <main className="auth"> <Link to="/SginIn">Sign in </Link>  to continue...</main>}
-  <Footer/>
-    </div>
-  )
+  </main>
+          <Footer/>
+          </>
+        )
+      }
+    }
+  
+    //error
+        if (error) {
+          return (
+            <div>
+              <Header />
+              <p>Error: {error}</p>
+              <Footer />
+            </div>
+          );
+        }
 }

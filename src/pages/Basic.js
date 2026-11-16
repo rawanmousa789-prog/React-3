@@ -33,7 +33,9 @@ export default function Basic() {
       </div>
     );
   }
-  return (
+
+  if(user){
+    return (
     <div>
       <Helmet>
         <title>Basic page</title>
@@ -54,4 +56,5 @@ export default function Basic() {
       <Footer />
     </div>
   );
+  }
 }
