@@ -5,15 +5,34 @@ import {  useEffect } from 'react';
 import {useNavigate} from "react-router";
 import {auth} from "../firebase/Config"
 import { useAuthState } from 'react-firebase-hooks/auth';
+import Moment from 'react-moment';
 
 export default function Basic() {
   let navigate = useNavigate();
   const [user, loading, error] = useAuthState(auth);
   useEffect(() => {
-    if(!user){
+    if(!user && !loading){
       navigate("/");
     }
   });
+  if (loading) {
+    return (
+      <div>
+        <Header />
+        <p>Initialising User...</p>
+        <Footer />
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div>
+        <Header />
+        <p>Error: {error}</p>
+        <Footer />
+      </div>
+    );
+  }
   return (
     <div>
       <Helmet>
@@ -22,16 +41,16 @@ export default function Basic() {
       </Helmet>
       <Header />
 
-      {/* <Content data="Basic" /> */}
-      
+      <main>
       <div className="basic-page">
         <h3>Wellcome {user.displayName}</h3>
         <p>Email: {user.email}</p>
-        <p>last time sign in: {user.metadata.lastSignInTime}</p>
-        <p>created acount: {user.metadata.creationTime}</p>
+      
+        <p>last time sign in: <Moment className="date" fromNow date={user.metadata.lastSignInTime} /></p>
+        <p>created acount: <Moment className="date"  format="YYYY/MM/DD" date={user.metadata.creationTime} /></p>
         <button className="deleteBtn">Delete Account</button>
       </div>
-
+</main>
       <Footer />
     </div>
   );
