@@ -15,7 +15,30 @@ export default function Framework() {
       navigate("/");
     }
   });
-  return (
+  if (loading) {
+      return (
+        <div>
+          <Header />
+          <p>Initialising User...</p>
+          <Footer />
+        </div>
+      );
+    }
+    if (error) {
+      return (
+        <div>
+          <Header />
+          <p>Error: {error}</p>
+          <Footer />
+        </div>
+      );
+    }
+  if(user){
+    if(!user.emailVerified){
+      navigate("/");
+    }
+    if(user.emailVerified){   
+      return (
     <div>
       <Helmet>
         <title>Framework page</title>
@@ -30,4 +53,6 @@ export default function Framework() {
       <Footer/>
     </div>
   )
+    }
+  }
 }

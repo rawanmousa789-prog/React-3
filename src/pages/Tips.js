@@ -15,7 +15,30 @@ export default function Tips() {
       navigate("/");
     }
   });
-  return (
+  if (loading) {
+      return (
+        <div>
+          <Header />
+          <p>Initialising User...</p>
+          <Footer />
+        </div>
+      );
+    }
+    if (error) {
+      return (
+        <div>
+          <Header />
+          <p>Error: {error}</p>
+          <Footer />
+        </div>
+      );
+    }
+  if(user){
+    if(!user.emailVerified){
+      navigate("/");
+    } 
+    if(user.emailVerified){
+      return (
     <div>
       <Helmet>
         <title>Tips page</title>
@@ -23,14 +46,6 @@ export default function Tips() {
       name="description"
       content="Tips"
     />
-    {/* <style>{`
-    body{
-        background-color:#888;
-      }
-    `}
-      
-      
-    </style> */}
       </Helmet>
       <Header/>
   <Content data="Tips"/>
@@ -38,4 +53,6 @@ export default function Tips() {
   <Footer/>
     </div>
   )
+}
+  }
 }
