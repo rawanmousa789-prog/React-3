@@ -6,6 +6,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import {auth} from "../firebase/Config"
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import './SignIn.css'
 
 export default function SginIn() {
   let navigate = useNavigate();
@@ -72,6 +73,12 @@ export default function SginIn() {
           </p>
           {error && <p>{messageError}</p>}
         </form>
+
+        <form className="reset-password">
+          <div className="close-btn">X</div>
+          <input required type="email" placeholder="Your Email" />
+          <button>Reset Password</button>
+          </form>    
       </main>
       <Footer />
     </div>
