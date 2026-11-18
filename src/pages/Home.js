@@ -39,7 +39,7 @@ export default function Home() {
                 <Header/>
                 <main>
                   <div>
-                    <p>we sent an email to verifiy your account</p>
+                    <p className="ver-mess">we sent an email to verifiy your account</p>
                     <button className="deleteBtn"
                     onClick={() => {
                       sendEmailVerification(auth.currentUser)
