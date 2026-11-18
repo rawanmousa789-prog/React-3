@@ -14,6 +14,8 @@ export default function SginIn() {
   const[password , setPassword] = useState("")
   const[error , setError] = useState(false)
   const [messageError, setMessageError] = useState("")
+  const [resetEmail , setResetEmail] = useState(false)
+  const [showForm , setShowForm] = useState(false)
   return (
     <div>
       <Helmet>
@@ -72,12 +74,17 @@ export default function SginIn() {
             Don't have an account? <Link to="/SginUp">Sign Up</Link>
           </p>
           {error && <p>{messageError}</p>}
+          <p className="reset-password-link" onClick={() => setShowForm('show-reset-password')}>Forgot Password?</p>
         </form>
 
-        <form className="reset-password">
-          <div className="close-btn">X</div>
+        <form className={`reset-password ${showForm}`}>
+          <div className="close-btn" onClick={() => setShowForm('')}>X</div>
           <input required type="email" placeholder="Your Email" />
-          <button>Reset Password</button>
+          <button onClick={(e) => {
+            e.preventDefault(); 
+            setResetEmail(true);
+          }}>Reset Password</button>
+          {resetEmail && <p className="reset-email">Check your email to reset your password.</p>}
           </form>    
       </main>
       <Footer />
