@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from "../firebase/Config";
 import { Link  } from "react-router";
-
+import {  sendEmailVerification } from "firebase/auth";
 
 export default function Home() {
   const [user, loading, error] = useAuthState(auth);
@@ -40,7 +40,16 @@ export default function Home() {
                 <main>
                   <div>
                     <p>we sent an email to verifiy your account</p>
-                    <button className="deleteBtn">send again</button>
+                    <button className="deleteBtn"
+                    onClick={() => {
+                      sendEmailVerification(auth.currentUser)
+  .then(() => {
+    // Email verification sent!
+    console.log("email sent again!!")
+  });
+                    }
+                    }
+                    >send again</button>
                   </div>
                 </main>
                 <Footer/>
