@@ -44,21 +44,12 @@ export default function SginUp() {
     }
   // signin without email verification
   if(user){
+    if(user.emailVerified){ 
+      navigate("/")
+    }
     if(!user.emailVerified){
-    return(
-      <div>
-        <Header/>
-        <main>
-          <div>
-            <p>we sent an email to verifiy your account</p>
-            <button className="deleteBtn">send again</button>
-          </div>
-        </main>
-        <Footer/>
-      </div>
-
-    )
-  }
+      navigate("/")
+    }
   }
   // not signin
   if (!user) {

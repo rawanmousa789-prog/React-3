@@ -6,6 +6,7 @@ import {useNavigate} from "react-router";
 import {auth} from "../firebase/Config"
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Moment from 'react-moment';
+import {  deleteUser } from "firebase/auth";
 
 export default function Basic() {
   let navigate = useNavigate();
@@ -54,7 +55,16 @@ export default function Basic() {
       
         <p>last time sign in: <Moment className="date" fromNow date={user.metadata.lastSignInTime} /></p>
         <p>created acount: <Moment className="date"  format="YYYY/MM/DD" date={user.metadata.creationTime} /></p>
-        <button className="deleteBtn">Delete Account</button>
+        <button className="deleteBtn"
+        onClick={() => {
+          deleteUser(user).then(() => {
+  console.log("user deleted")
+}).catch((error) => {
+  // An error ocurred
+  console.log("delete fail")
+});
+        }}
+        >Delete Account</button>
       </div>
 </main>
       <Footer />
