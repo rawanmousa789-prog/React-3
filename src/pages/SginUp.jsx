@@ -22,6 +22,57 @@ export default function SginUp() {
   const [userName, setUserName] = useState("");
   const [Error, setError] = useState(false);
   const [messageError, setMessageError] = useState("");
+  //js code
+  const signUpBTN = (e) => {
+    e.preventDefault();
+                createUserWithEmailAndPassword(auth, email, password)
+                  .then((userCredential) => {
+                    
+                    const user = userCredential.user;
+                    console.log("sign up success!!");
+                    sendEmailVerification(auth.currentUser)
+                    .then(() => {
+                      // Email verification sent!
+                      console.log("Email verification sent!");
+                    });
+                    updateProfile(auth.currentUser, {
+                      displayName: userName,
+                    })
+                      .then(() => {
+                        // Profile updated!
+                        console.log("success update profile");
+                      })
+                      .catch((error) => {
+                        // An error occurred
+                        console.log("error update profile");
+                      });
+                    navigate("/");
+                  })
+                  .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    setError(true);
+                    switch (errorCode) {
+                      case "auth/email-already-in-use":
+                        setMessageError("Email already in use.");
+                        break;
+                      case "auth/invalid-email":
+                        setMessageError("Invalid email address.");
+                        break;
+                      case "auth/weak-password":
+                        setMessageError(
+                          "Password should be at least 6 characters.",
+                        );
+                        break;
+                      default:
+                        setMessageError("An error occurred. Please try again.");
+                    }
+                    console.log("error!!!");
+                    console.log(errorCode);
+                    console.log(errorMessage);
+                  });
+  }
+  
 // loading
   if (loading) {
     return (
@@ -88,53 +139,7 @@ export default function SginUp() {
             />
             <button
               onClick={(e) => {
-                e.preventDefault();
-                createUserWithEmailAndPassword(auth, email, password)
-                  .then((userCredential) => {
-                    
-                    const user = userCredential.user;
-                    console.log("sign up success!!");
-                    sendEmailVerification(auth.currentUser)
-                    .then(() => {
-                      // Email verification sent!
-                      console.log("Email verification sent!");
-                    });
-                    updateProfile(auth.currentUser, {
-                      displayName: userName,
-                    })
-                      .then(() => {
-                        // Profile updated!
-                        console.log("success update profile");
-                      })
-                      .catch((error) => {
-                        // An error occurred
-                        console.log("error update profile");
-                      });
-                    navigate("/");
-                  })
-                  .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    setError(true);
-                    switch (errorCode) {
-                      case "auth/email-already-in-use":
-                        setMessageError("Email already in use.");
-                        break;
-                      case "auth/invalid-email":
-                        setMessageError("Invalid email address.");
-                        break;
-                      case "auth/weak-password":
-                        setMessageError(
-                          "Password should be at least 6 characters.",
-                        );
-                        break;
-                      default:
-                        setMessageError("An error occurred. Please try again.");
-                    }
-                    console.log("error!!!");
-                    console.log(errorCode);
-                    console.log(errorMessage);
-                  });
+                signUpBTN(e);
               }}
             >
               Sign Up

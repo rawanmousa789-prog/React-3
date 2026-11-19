@@ -17,33 +17,8 @@ export default function SginIn() {
   const [resetEmail, setResetEmail] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [resetPassword, setResetPassword] = useState("");
-  return (
-    <div>
-      <Helmet>
-        <title>SginIn page</title>
-      </Helmet>
-      <Header />
-      <main>
-        <form>
-          <input
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            required
-            type="email"
-            placeholder="Your Email"
-          />
-          <input
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            required
-            type="password"
-            placeholder="Password"
-          />
-          <button
-            onClick={(e) => {
-              e.preventDefault();
+  const signInBTN = (e) => {
+    e.preventDefault();
               signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                   // Signed in
@@ -77,6 +52,49 @@ export default function SginIn() {
                   }
                   console.log("faild login");
                 });
+  }
+  const resetPassBTN = (e) => {
+    e.preventDefault();
+              
+              sendPasswordResetEmail(auth, resetPassword)
+                .then(() => {
+                  // Password reset email sent!
+                  setResetEmail(true);
+                })
+                .catch((error) => {
+                  const errorCode = error.code;
+                  const errorMessage = error.message;
+                  // ..
+                });
+  }
+  
+  return (
+    <div>
+      <Helmet>
+        <title>SginIn page</title>
+      </Helmet>
+      <Header />
+      <main>
+        <form>
+          <input
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+            required
+            type="email"
+            placeholder="Your Email"
+          />
+          <input
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            required
+            type="password"
+            placeholder="Password"
+          />
+          <button
+            onClick={(e) => {
+              signInBTN(e);
             }}
           >
             Sign In
@@ -105,18 +123,7 @@ export default function SginIn() {
           required type="email" placeholder="Your Email" />
           <button
             onClick={(e) => {
-              e.preventDefault();
-              
-              sendPasswordResetEmail(auth, resetPassword)
-                .then(() => {
-                  // Password reset email sent!
-                  setResetEmail(true);
-                })
-                .catch((error) => {
-                  const errorCode = error.code;
-                  const errorMessage = error.message;
-                  // ..
-                });
+              resetPassBTN(e);
             }}
           >
             Reset Password

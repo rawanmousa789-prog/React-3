@@ -1,5 +1,5 @@
 import Home from './pages/Home';
-import Basic from './pages/Basic';
+import User from './pages/User';
 import Framework from './pages/Framework';
 import Tips from './pages/Tips';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -16,8 +16,8 @@ const router = createBrowserRouter([
     errorElement: <Error404 />,
   },
   {
-    path: "/Basic",
-    element: <Basic />,
+    path: "/User",
+    element: <User />,
   },
   {
     path: "/Framework",
