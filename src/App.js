@@ -7,12 +7,13 @@ import {useContext } from "react";
 import Data from "./context/Data";
 import SginIn from './pages/SginIn';
 import SginUp from './pages/SginUp';
+import Error404 from './pages/Error404';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
-    errorElement: <h1>Not Found</h1>,
+    errorElement: <Error404 />,
   },
   {
     path: "/Basic",
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
   {
     path: "/SginUp",
     element: <SginUp />,
+  },
+  {
+    path: "*",
+    element: <Error404 />,
   },
 ]);
 
